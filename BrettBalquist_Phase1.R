@@ -168,7 +168,7 @@ roll2(bones = 1:4)
 ?sample
 #Typing ?function will provide a detailed descirption of the funciton at hand
 # This will incldue the Description, Usage, Arguments, and other sections
-
+# VALUE ---> Shows what the function returns adn if it is a plot it describes what the plot means.
 roll <- function(){
   die <- 1:6
   dice <- sample(die, size = 2, replace  = TRUE, prob = c(1/8,1/8,1/8,1/8,1/8,3/8))
