@@ -203,6 +203,8 @@ qplot(rolls,binwidth=1)
 
 #is.vector can test wheather an object is a vector or not and return a boolean value
 
+### Reference these as you go they are valuable tools
+
 
 
 
