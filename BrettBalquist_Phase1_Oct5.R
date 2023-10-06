@@ -296,3 +296,46 @@ axis(4)
 legend("topright",c("Total sleep","REM sleep"),pch=18,col=c(2,5),cex = 0.75)
 
 ?plot
+
+### Lesson 16: Writing Your Own Functions
+sum(Nile > 1200)
+#This gives us the count of the elements in the Nile data larger than 1200. Now, say we watn the mean of these elements:
+gt1200 <- which(Nile > 1200) #We fidn the indicies in Nile for elements larger than 1200
+nilesubsetGT1200 <- Nile[gt1200] # We extract the subset of Nile ocnsisteing of those elements
+mean(nilesubsetGT1200) # We compute the desired mean
+#This is a more compact versio
+mean(Nile[Nile > 1200])
+
+mgd <- function(x,d) mean(x[x > d])
+#Mean of elements. great than d
+# This is a function in a less compact version
+
+mgd(Nile,1200)
+#Output: 1250
+#Out function works wooo!
+mgd(tg$len,10.2)
+#This function call eliminates the need to type: mean(tg$len[tg$len > 10.2])
+
+#we are telling R, "R, I want to write my own function. I'd like to name it 'mgd'; it will have arguments 'x' and 'd', and it will do 'mean(x[x > d])'. Please build the function for me. Thanks in advance, R!"
+
+mgd(Nile,1200)
+#R execute mgd with Nile being x and 1200 being d. Nile and 1200 are the arguments 
+mgd <- function(x,d) return(mean(x[x > d]))
+#This now returns a number
+save(mgd, file='mean_greater_than_d')
+#This saved this to an indiicated file in our folder
+
+#We cna load this later by saying
+load('mean_greater_than_d')
+#mgd will be restored
+rng <- function(y) max(y) - min(y)
+rng(Nile)
+
+cgd <- function(x,d) return(sum(x>d))
+cgd(Nile,1200)
+
+cgd
+?sum
+#fucntions are objects
+#prints it out 
+mgd
