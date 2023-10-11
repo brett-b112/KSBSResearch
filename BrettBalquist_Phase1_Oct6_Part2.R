@@ -58,10 +58,34 @@ c = 1
 #This is the color increment it each time
 head(YrSpaceWt)
 YrSpaceWt <- serialAgg(NSSData, AggCats = c("GMT_YEAR", "latr"), AggTarg = "EXPCATCHWT")
-plot(YrSpaceWt[YrSpaceWt[,2] == 35,c(1,3)], type ="l", lty = 1, lwd = 1.5,ylim = c(min(YrSpaceWt[,3]),max(YrSpaceWt[,3]) ))
+plot(YrSpaceWt[YrSpaceWt[,2] == 35,c(1,3)],xlab = "Year", ylab = "Biomass",type ="l", lty = 1, lwd = 1.5,ylim = c(min(YrSpaceWt[,3]),max(YrSpaceWt[,3]) ))
 #lines(YrSpaceWt[YrSpaceWt[,2] == 41,c(1,3)], col = "red")
 
 for (x in 36:44){
   lines(YrSpaceWt[YrSpaceWt[,2] == x,c(1,3)], col = x)
 }
 
+par(mfrow = c(3,3)) #sets up a 3x3 plot grid
+#GMT_YEAR, fall, STRATUM, SVSPP, doy, DECDEG_BEGLAT, DECDEG_BEGLON, EXPCATCHWT
+#This sets 
+hist(NSSData$GMT_YEAR) # year
+hist(NSSData$fall) # i d k
+hist(NSSData$STRATUM) #A predefined area where a net dredge, or other piece of gear was deployed.
+hist(NSSData$SVSPP) #A standard code which represents a species caught in a trawl or dredge. Refer to the SVDBS.SVSPECIES_LIST
+hist(NSSData$doy) #Day of the year sample was collected
+hist(NSSData$DECDEG_BEGLAT) #Beginning decimal degree latitude 
+hist(NSSData$DECDEG_BEGLON) #Beginning decimal degree longitude
+hist(NSSData$EXPCATCHWT) #Expanded catch weight of all individuals captures of a given species measured to the nearest thousanth of a kilogram.
+
+par(mfrow = c(2,2))
+Yr_doy <- serialAgg(NSSData, AggCats = "GMT_YEAR", AggTarg = "doy")
+plot(Yr_doy, type ="l", lty = 1, lwd = 1.5, main = "Northern Shortfin Squid",xlab = "Year", ylab = "doy" )
+
+Yr_AVGDEPTH <- serialAgg(NSSData, AggCats = "GMT_YEAR", AggTarg = "AVGDEPTH")
+plot(Yr_AVGDEPTH, type ="l", lty = 1, lwd = 1.5, main = "Northern Shortfin Squid",xlab = "Year", ylab = "AVGDEPTH" )
+
+Yr_SVVESSEL <- serialAgg(NSSData, AggCats = "GMT_YEAR", AggTarg = "SVVESSEL")
+plot(Yr_SVVESSEL, type ="l", lty = 1, lwd = 1.5, main = "Northern Shortfin Squid",xlab = "Year", ylab = "SVVESSEL" )
+
+Yr_TOWDUR <- serialAgg(NSSData, AggCats = "GMT_YEAR", AggTarg = "TOWDUR")
+plot(Yr_TOWDUR, type ="l", lty = 1, lwd = 1.5, main = "Northern Shortfin Squid",xlab = "Year", ylab = "TOWDUR" )
