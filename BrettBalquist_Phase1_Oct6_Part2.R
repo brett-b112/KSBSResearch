@@ -46,14 +46,14 @@ NSSBiomass <- serialAgg(NSSData,AggCats = "GMT_YEAR",AggTarg = "EXPCATCHWT")
 plot(NSSBiomass, type ="l", lty = 1, lwd = 1.5, main = "Northern Shortfin Squid",xlab = "Year", ylab = "Biomass" )
 NSSBiomass
 
-
+#This is the start of part 5 Using the Northern Shortfin Squid from above.
 NSSData$latr <- round(NSSData$DECDEG_BEGLAT) #Makes the rounded degrees column and adds it to NSSData
 NSSData # Prints out the graph with added data
 unique(NSSData$latr) #prints unique latitudes
 
 head(NSSData)
 class(NSSData$GMT_YEAR)
-
+par(mfrow = 1)
 c = 1
 #This is the color increment it each time
 head(YrSpaceWt)
@@ -69,7 +69,7 @@ par(mfrow = c(3,3)) #sets up a 3x3 plot grid
 #GMT_YEAR, fall, STRATUM, SVSPP, doy, DECDEG_BEGLAT, DECDEG_BEGLON, EXPCATCHWT
 #This sets 
 hist(NSSData$GMT_YEAR) # year
-hist(NSSData$fall) # i d k
+hist(NSSData$fall) # (fall = 0 is spring) (fall = 1 is fall)
 hist(NSSData$STRATUM) #A predefined area where a net dredge, or other piece of gear was deployed.
 hist(NSSData$SVSPP) #A standard code which represents a species caught in a trawl or dredge. Refer to the SVDBS.SVSPECIES_LIST
 hist(NSSData$doy) #Day of the year sample was collected

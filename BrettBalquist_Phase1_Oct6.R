@@ -77,3 +77,4 @@ serialAgg=function (x, AggCats, AggTarg = NULL, FUN = function(x) mean(x, na.rm 
                                    x[, c(AggTarg, AggTarg[1])]))[c(1, 3:(ncol(agged) + 1))]
   agged
 }
+
