@@ -339,3 +339,108 @@ cgd
 #fucntions are objects
 #prints it out 
 mgd
+
+
+#Lesson 16, 17, 18, and 20.
+sum(Nile > 1200)
+#This gives us the count of elements in the Nile data larger than 1200.
+gt1200 <- which(Nile > 1200)
+nileSubSetGT1200 <- Nile[gt1200]
+mean(nilesubsetGT1200)
+
+#This is the same as 
+
+mean(Nile[Nile > 1200])
+
+#This is what the above code did that was abstracted
+#In line 1, we find the indices in Nile for the elements larger than 1200.
+
+#In line 2, we extract the subset of Nile consisting of those elements.
+
+#In line 3, we compute the desired mean.
+
+#Functions
+mgd <- function(x,d) mean(x[x > d])
+mgd(Nile,1200) 
+mgd(tg$len,10.2)
+#mean(tg$len[tg$len > 10.2]) Would have had to type this
+
+class(mgd)
+#This made a function
+#x and d are formaul arguments
+
+save(mgd,file='mean_greater_than_d') #This saves teh function to a file
+load('mean_greater_than_d') #This loads the function
+
+rng <- function(y) max(y) - min(y)
+rng(Nile)
+n0 <- function(x) sum(x == 0)
+n0()  #Number of elements that equal 0 in Nile
+
+#LESSON 17
+pima <- read.csv('http://heather.cs.ucdavis.edu/FasteR/data/Pima.csv',header=TRUE)
+n0(pima)
+pima$glucose[pima$glucose == 0] <- NA
+for (i in 1:9) print(sum(pima[,i] == 0))
+#This is a for loop in R
+#for (colNumber in 1:9) print(sum(pima[,colNumber] == 0))
+#i can be renamed such as colNumber and be reused
+for (i in 1:9) print(sum(pima[,i] == 0))
+colnames(pima)
+
+for (i in 2:6) pima[pima[,i] == 0,i] <- NA
+
+#This can be rewritten as
+for (i in 2:6) {
+      zeroIndices <- which(pima[,i] == 0)
+      pima[zeroIndices,i] <- NA
+   }
+zeroIndices <- which(pima[,i] == 0)
+pima[zeroIndices,i] <- NA
+f <- function(n,s) 
+{
+  tot <- 0
+  for (i in 1:n) {
+    tot <- tot + i^3
+    if (tot > s) {
+      print(i)
+      break
+    }
+    if (i == n) print('failed')
+  }
+}
+f(100,345)
+f(5,345)
+
+#SECTION 18
+zerosToNAs <- function(d,cols){
+  for (j in cols){
+    NARows <-which(d[,j] == 0)
+    d[NARows,j] <- NA
+  }
+}
+pima <- zerosToNAs(pima,2:6)
+countNAs <- function(dfr){
+  sum(is.na(dfr) == TRUE)
+}
+x <- c(5,NA,13,28,NA)
+countNAs(x)
+#This counts the number of NAs in x
+
+#LESSON 20: If, Else, Ifelse
+head(prgeng$educ,15)
+for (i in 1:nrow(prgeng)){
+  if (prgeng$educ[i] < 13) {
+    prgeng$educ[i] <- 12
+  }
+}
+head(prgeng$educ,15)
+
+edu <- prgeng$educ
+prgeng$educ <- ifelse(edu < 13,12,edu)
+# Here, edu < 12 produces a vector of TRUEs and FALSEs. For each TRUE, we set the corresponding element of the output to 12; for each FALSE, we set the corresponding element of the output to the corresponding element of edu. That's exactly what we want to happen.
+plot(prgeng$age,prgeng$wageinc,col=edu)
+
+nile <- ifelse(Nile > 1150,3,2)
+nile <- ifelse(Nile < 800,1,nile)
+table(nile)
