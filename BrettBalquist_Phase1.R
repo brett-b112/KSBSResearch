@@ -205,12 +205,122 @@ qplot(rolls,binwidth=1)
 
 ### Reference these as you go they are valuable tools
 
+#Hands on with R section 11
 
+rolls <- expand.grid(die,die)
+rolls
+#expand grid prints all of hte possibilites of these two combinations.
+rolls$value <- rolls$Var1 + rolls$Var2
+head(rolls, 3)
+#This is the sum of the two dice stored in clumn value
 
+prob <- c("1" = 1/8, "2" = 1/8, "3" = 1/8, "4" = 1/8, "5" = 1/8, "6" = 3/8)
+prob
+#ths is the probability table
+rolls$Var1
+prob[rolls$Var1]
+#This keys rolls to the table
+rolls$prob2 <- prob[rolls$Var2]
+head(rolls,3)
+rolls$prob1 <- prob[rolls$Var1]
+head(rolls, 3)
+rolls$prob <- rolls$prob1 * rolls$prob2
+head(rolls,3)
 
+sum(rolls$value * rolls$prob)
+#This takes the sum of them
 
+wheel <- c("DD", "7", "BBB", "BB", "B", "C", "0")
+combos <- expand.grid(wheel, wheel, wheel, stringsAsFactors = FALSE)
+#This makes sure that when we expand.grid it saves the combinations as factors
+combos
 
+get_symbols <- function() {
+  wheel <- c("DD", "7", "BBB", "BB", "B", "C", "0")
+  sample(wheel, size = 3, replace = TRUE,prob = c(0.03, 0.03, 0.06, 0.1, 0.25, 0.01, 0.52))
+}
+#Next make a lookup table
+prob <- c("DD" = 0.03, "7" = 0.03, "BBB" = 0.06, 
+          "BB" = 0.1, "B" = 0.25, "C" = 0.01, "0" = 0.52)
+combos$prob1 <- prob[combos$Var1]
+combos$prob2 <- prob[combos$Var2]
+combos$prob3 <- prob[combos$Var3]
+head(combos, 3)
+#This generates the columns with the probabilities.
+combos$prob <- combos$prob1 * combos$prob2 * combos$prob3
+head(combos,3) #head of combos with 3 rows
+sum(combos$prob)
+#This shows that the probabilities sum to one so our math is correct
+symbols <- c(combos[1, 1], combos[1, 2], combos[1, 3])
+score(symbols)
 
+#New section for loops
 
+#for (valie in that){
+ # do this
+#}
 
+for (value in c("My", "first", "for", "loop")) {
+  print("one run")
+}
+#Prints one run number of timesi n array 
+#value can be changed for word, string, i, or anything etc..
 
+words <- c("My", "fourth", "for", "loop")
+chars <- vector(length = 4)
+for (i in 1:4) {
+  chars[i] <- words[i]
+}
+chars
+
+#Now make a for loop for prize in combos
+combos$prize <- NA
+head(combos, 3)
+
+for (i in 1:nrow(combos)) {
+  symbols <- c(combos[i, 1], combos[i, 2], combos[i, 3])
+  combos$prize[i] <- score(symbols)
+}
+#This builds a for loob that goes throguh all of the rows and computes score on each entry
+
+sum(combos$prize * combos$prob)
+## 0.538014
+
+#11.4 While Loops 
+# while (condition) {
+#   code
+# }
+#This takes the code and says while this condition is TRUE then it runs the code
+
+plays_till_broke <- function(start_with) {
+  cash <- start_with
+  n <- 0
+  while (cash > 0) {
+    cash <- cash - 1 + play()
+    n <- n + 1
+  }
+  n
+}
+#this simulates a slot machien and returns the number of times the user gto to play
+
+plays_till_broke(100)
+
+#Repeat loops 
+#repeat loops are even more basic than while loops. They will repeat a chunk of code until you tell them to stop (by hitting Escape) or until they encounter the command break, which will stop the loop.
+plays_till_broke <- function(start_with) {
+  cash <- start_with
+  n <- 0
+  repeat {
+    cash <- cash - 1 + play()
+    n <- n + 1
+    if (cash <= 0) {
+      break
+    }
+  }
+  n
+}
+
+plays_till_broke(100)
+## 237
+
+##260
